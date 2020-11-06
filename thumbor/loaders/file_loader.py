@@ -10,7 +10,7 @@
 
 from datetime import datetime
 from os import fstat
-from os.path import abspath, exists, join
+from os.path import abspath, exists, join, isfile
 from urllib.parse import unquote
 
 from thumbor.loaders import LoaderResult
@@ -32,7 +32,7 @@ async def load(context, path):
 
     # keep backwards compatibility, try the actual path first
     # if not found, unquote it and try again
-    if not exists(file_path):
+    if not exists(file_path) and isfile(file_path):
         file_path = unquote(file_path)
 
     if exists(file_path):
